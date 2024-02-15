@@ -10,7 +10,7 @@
           value="<?= isset($_POST['title']) ? $_POST['title'] : "" ?>">
 
         <?php if (isset($errors['title'])): ?>
-          <p class=" text-red-700 font-semibold">
+          <p class=" text-red-500 font-semibold">
             <?= $errors['title'] ?>
           </p>
         <?php endif; ?>
@@ -19,7 +19,7 @@
         <textarea class="w-full mt-1 p-2" name="description" id="" cols="30" rows="5"
           placeholder="Write the description here"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
         <?php if (isset($errors['description'])): ?>
-          <p class="mt-1 text-red-700 font-semibold">
+          <p class="mt-1 text-red-500 font-semibold">
             <?= $errors['description'] ?>
           </p>
         <?php endif; ?>
