@@ -16,9 +16,11 @@
             <a href="/about" class="<?=
               uriIs('/about') ? "text-gray-300 bg-gray-900" : "text-white"
               ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">About</a>
-            <a href="/notes" class="<?=
-              uriIs('/notes') ? "text-gray-300 bg-gray-900" : "text-white"
-              ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Notes</a>
+            <?php if ($_SESSION['user'] ?? false): ?>
+              <a href="/notes" class="<?=
+                uriIs('/notes') ? "text-gray-300 bg-gray-900" : "text-white"
+                ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Notes</a>
+            <?php endif; ?>
             <a href="/contact" class="<?=
               uriIs('/contact') ? "text-gray-300 bg-gray-900" : "text-white"
               ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Contact</a>
@@ -40,7 +42,7 @@
           </button>
 
           <!-- Profile dropdown -->
-          <div class="relative ml-3">
+          <div class="relative">
             <div>
               <button type="button"
                 class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -48,19 +50,21 @@
                 <!-- <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span> -->
                 <?php if ($_SESSION['user'] ?? false): ?>
+
                   <img class="h-8 w-8 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     alt="">
-                <?php else: ?>
-                  <a href="/register" class="<?=
-                    uriIs('/register') ? "text-gray-300 bg-gray-900" : "text-white"
-                    ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Register</a>
-                  <a href="/login" class="<?=
-                    uriIs('/login') ? "text-gray-300 bg-gray-900" : "text-white"
-                    ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Login</a>
-                <?php endif; ?>
-              </button>
+                </button>
+              <?php else: ?>
+                <a href="/register" class="<?=
+                  uriIs('/register') ? "text-gray-300 bg-gray-900" : "text-white"
+                  ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Register</a>
+                <a href="/login" class="<?=
+                  uriIs('/login') ? "text-gray-300 bg-gray-900" : "text-white"
+                  ?>  rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">Login</a>
+              <?php endif; ?>
             </div>
+
 
             <!--
                 Dropdown menu, show/hide based on menu state.
@@ -88,8 +92,20 @@
 
 
           </div>
+          <?php if ($_SESSION['user'] ?? false): ?>
+            <div class="ml-3">
+              <form method="POST" action="/sessions">
+                <input class="hidden" type="hidden" name="_method" value="DELETE">
+                <button class="text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700">Log Out</button>
+              </form>
+            </div>
+          <?php endif; ?>
         </div>
+
+
+
       </div>
+
       <div class="-mr-2 flex md:hidden">
         <!-- Mobile menu button -->
         <button type="button"

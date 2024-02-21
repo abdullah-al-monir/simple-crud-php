@@ -32,28 +32,26 @@ $user = $db->query('SELECT * FROM demo.users where email = :email ', [
   'email' => $email
 ])->find();
 
-if (!$user) {
-  return view('sessions/create.view.php', [
-    'errors' => [
-      'email' => 'No matching account found for that email address.'
-    ]
-  ]);
+if ($user) {
+  if (password_verify($password, $user['password'])) {
+    login([
+      'email' => $email,
+      'name' => $user['name'],
+    ]);
+
+    header('location: /');
+    exit();
+  }
+
 }
 
-if (password_verify($password, $user['password'])) {
-  login([
-    'email' => $email,
-    'name' => $user['name'],
-  ]);
-
-  header('location: /');
-  exit();
-}
 
 return view('sessions/create.view.php', [
   'errors' => [
-    'password' => 'Password does not matched.'
+    'email' => 'No matching account found for that email address and password.'
   ]
 ]);
+
+
 
 
