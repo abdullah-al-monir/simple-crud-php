@@ -46,15 +46,16 @@ if ($user) {
   $db->query('INSERT INTO demo.users(name,email,password) VALUES (:name,:email,:password)', [
     'name' => $name,
     'email' => $email,
-    'password' => password_hash($password, PASSWORD_DEFAULT)
+    'password' => password_hash($password, PASSWORD_BCRYPT)
   ]);
 
-  // ,ark that the user is logged in
-  $_SESSION['user'] = [
+  login([
+    'name' => $name,
     'email' => $email
-  ];
+  ]);
 
   header('location: /');
+  exit();
 }
 
 

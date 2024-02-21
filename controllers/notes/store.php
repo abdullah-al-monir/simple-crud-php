@@ -6,8 +6,7 @@ use Core\Database;
 
 
 $db = App::resolve(Database::class);
-
-
+$user_id = $_SESSION['user']['id'];
 $errors = [];
 if (!Validator::string($_POST['title'], 1, 150)) {
   $errors['title'] = 'A title of no more than 150 characters is required.';
